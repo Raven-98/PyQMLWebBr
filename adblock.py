@@ -1,10 +1,8 @@
 # This Python file uses the following encoding: utf-8
 
 from PySide2.QtCore import QFile, QTextStream
-from PySide2.QtCore import QJsonDocument
 
 class Filters:
-    _specifyingFilterOptions = ("script", "image", "stylesheet", "object", "xmlhttprequest", "subdocument", "ping", "websocket", "webrtc", "document", "elemhide", "generichide", "genericblock", "popup", "font", "media", "other", "match-case")
     _easyList = dict()
 
     def __init__(self):
@@ -95,15 +93,6 @@ class Filters:
                                                     self._writeSuperDict("blacklist", "basedomain", pattern_line, domain_list)
                                                 else:
                                                     self._writeSuperDict("whitelist", "basedomain", pattern_line, domain_list)
-
-
-        json = QJsonDocument()
-        json.setObject(self._easyList)
-        jsonFile = QFile("easylist.json")
-        if not jsonFile.open(QFile.WriteOnly):
-            return
-        jsonFile.write(json.toJson())
-        jsonFile.close()
 
 
     def chekUrl(self, url):
