@@ -2,42 +2,23 @@
 import sys
 from pathlib import Path
 
-from PySide2.QtCore import Qt, QUrl, QFile, QJsonDocument
+from PySide2.QtCore import Qt, QUrl
 from PySide2.QtGui import QGuiApplication
 from PySide2.QtQml import QQmlApplicationEngine
 from PySide2.QtWebEngine import QtWebEngine
 from PySide2.QtWebEngineCore import QWebEngineUrlRequestInterceptor
 from PySide2.QtWebEngineWidgets import QWebEngineProfile
 
+import adblock
+
 class WebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
     def __init__(self):
         super().__init__()
-        self.filters = Filters()
+        self.filters = adblock.Filters()
 
     def interceptRequest(self, info):
         strUrl = info.requestUrl().toString()
         info.block(self.filters.chekUrl(strUrl))
-
-
-class Filters:
-    def __init__(self):
-        self.blacklist = {}
-        jsonFile = QFile("easylist.json")
-        if not jsonFile.open(QFile.ReadOnly):
-            return
-        byteArray = jsonFile.readAll()
-        jsonDocument = QJsonDocument.fromJson(byteArray)
-        root = jsonDocument.object()
-        self.blacklist = root["blacklist"]
-
-    def chekUrl(self, url):
-        if len(self.blacklist) > 0:
-            for key in self.blacklist.keys():
-                requestUrlList = self.blacklist[key]
-                for item in requestUrlList:
-                    if url.find(item) > -1:
-                        return True
-        return False
 
 
 if __name__ == "__main__":

@@ -106,9 +106,9 @@ ApplicationWindow {
                         if (!favoriteUrlList.includes(webEngineView.url.toString())) {
                             favoriteNameList.push(webEngineView.title.toString())
                             favoriteUrlList.push(webEngineView.url.toString())
-                            settingsMenuRepeater.model = favoriteNameList
-                            if (!settingsButton.enabled)
-                                settingsButton.enabled = true
+                            bookmarksMenuRepeater.model = favoriteNameList
+                            if (!bookmarksButton.enabled)
+                                bookmarksButton.enabled = true
                         }
                     }
                     else {
@@ -116,8 +116,8 @@ ApplicationWindow {
                         if (index > -1) {
                             favoriteNameList.splice(index, 1)
                             favoriteUrlList.splice(index, 1)
-                            settingsMenuRepeater.model = favoriteNameList
-                            settingsButton.enabled = favoriteUrlList.length > 0
+                            bookmarksMenuRepeater.model = favoriteNameList
+                            bookmarksButton.enabled = favoriteUrlList.length > 0
                         }
                     }
                 }
@@ -128,17 +128,17 @@ ApplicationWindow {
 
 
             CToolButton {
-                id: settingsButton
-                icon.source: "img/list.png"
-                onClicked: settingsMenu.open()
-                checked: settingsMenu.visible
+                id: bookmarksButton
+                icon.source: "img/bookmarks.png"
+                onClicked: bookmarksMenu.open()
+                checked: bookmarksMenu.visible
                 enabled: favoriteUrlList.length > 0
 
                 Menu {
-                    id: settingsMenu
-                    y: settingsButton.height
+                    id: bookmarksMenu
+                    y: bookmarksButton.height
                     Repeater {
-                        id: settingsMenuRepeater
+                        id: bookmarksMenuRepeater
                         model: favoriteNameList
                         MenuItem {
                             text: favoriteNameList[index]
