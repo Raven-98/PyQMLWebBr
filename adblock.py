@@ -3,6 +3,7 @@
 from PySide2.QtCore import QFile, QTextStream
 
 class Filters:
+    _specifyingFilterOptions = ("script", "image", "stylesheet", "object", "xmlhttprequest", "subdocument", "ping", "websocket", "webrtc", "document", "elemhide", "generichide", "genericblock", "popup", "font", "media", "other", "match-case")
     _easyList = dict()
 
     def __init__(self):
