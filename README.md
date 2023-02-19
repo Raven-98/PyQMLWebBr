@@ -4,4 +4,4 @@
 
 ### Бібліотеки
 
-Для роботи браузера необхідно мати встановлений PySide2
+Для роботи браузера необхідно мати встановлені [PySide2](https://pypi.org/project/PySide2/), [adblockparser](https://pypi.org/project/adblockparser/) та [pyre2](https://pypi.org/project/pyre2/).

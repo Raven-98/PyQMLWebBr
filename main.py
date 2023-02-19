@@ -9,16 +9,20 @@ from PySide2.QtWebEngine import QtWebEngine
 from PySide2.QtWebEngineCore import QWebEngineUrlRequestInterceptor
 from PySide2.QtWebEngineWidgets import QWebEngineProfile
 
-import adblock
+from adblockparser import AdblockRules
 
 class WebEngineUrlRequestInterceptor(QWebEngineUrlRequestInterceptor):
     def __init__(self):
         super().__init__()
-        self.filters = adblock.Filters()
+
+        with open("easylist.txt") as f:
+            raw_rules = f.readlines()
+            self.rules = AdblockRules(raw_rules)
 
     def interceptRequest(self, info):
-        strUrl = info.requestUrl().toString()
-        info.block(self.filters.chekUrl(strUrl))
+        url = info.requestUrl().toString()
+        if self.rules.should_block(url):
+            info.block(True)
 
 
 if __name__ == "__main__":

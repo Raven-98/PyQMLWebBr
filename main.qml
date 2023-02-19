@@ -43,6 +43,12 @@ ApplicationWindow {
         RowLayout {
             anchors.fill: parent
 
+            CToolButton {
+                id: googleButton
+                icon.source: "img/google.png"
+                onClicked: webEngineView.url = "https://google.com/"
+            }
+
             ToolButton {
                 property int itemAction: WebEngineView.Back
                 enabled: webEngineView.action(itemAction).enabled
@@ -207,7 +213,7 @@ ApplicationWindow {
             case WebEngineView.LoadStoppedStatus:
             case WebEngineView.LoadSucceededStatus:
                 appRoot.title = "%1 | %2".arg(appName).arg(title)
-                if (!favoriteButton.checked & favoriteUrlList.includes(url.toString()))
+                if (favoriteUrlList.includes(url.toString()))
                     favoriteButton.checked = true
                 else
                     favoriteButton.checked = false
